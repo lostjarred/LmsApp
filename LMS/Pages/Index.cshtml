@@ -1,0 +1,42 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Entity Framework Demo</h1>
+    <p>This page simply reads from a SQL database and displays the records in a simple HTML table. Test data is generated when the database is created.</p>
+    <br />
+    @* This is a really ugly table built using normal HTML.  
+       Use of Bootstrap classes and ASP Tag Helpers would make 
+       this table look much nicer. but this is fine for demo pourposes. *@
+    <table class="table-bordered justify-content-center">
+        <thead class="table-dark">
+            <tr>
+                <td width="50">ID</td>
+                <td width="100">Brand</td>
+                <td width="200">Model</td>
+                <td width="300">Processor</td>
+                <td width="80">RAM</td>
+                <td width="80">HDD Size</td>
+                <td width="150">Form Factor</td>
+        </thead>
+        <tbody class="table-primary">
+            @{ foreach (var item in Model.ComputersList)
+                {
+                        <tr>
+                            <td width="50">@item.Id</td>
+                            <td width="100">@item.Brand</td>
+                            <td width="200">@item.Model</td>
+                            <td width="300">@item.Processor</td>
+                            <td width="80">@item.RamInMegabytes</td>
+                            <td width="80">@item.HddSize</td>
+                            <td width="150">@item.CaseType</td>
+                        </tr>
+                }}
+        </tbody>
+    </table>
+    <br>
+    <h3 class="bg-info">Total Records: @Model.ComputersList.Count()</h3>
+</div>
