@@ -19,7 +19,7 @@ namespace LMS.Pages
             _logger = logger;
             _context = context;
         }
-        public IEnumerable<Computers> ComputersList { get; set; }
+        public IEnumerable<ComputerModel> ComputersList { get; set; }
 
         public void OnGet()
         {

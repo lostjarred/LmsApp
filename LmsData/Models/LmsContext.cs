@@ -14,7 +14,14 @@ namespace LmsData.Models
 
         }
 
-        public DbSet<Computers> Computers { get; set; }
+        public DbSet<ComputerModel> Computers { get; set; }
+        public DbSet<MentorModel> Mentors { get; set; }
+        public DbSet<MemberModel> Members { get; set; }
+        public DbSet<IncidentModel> Incidents { get; set; }
+        public DbSet<SessionModel> Sessions { get; set; }
+        public DbSet<IssueModel> KnownIssues { get; set; }
+        public DbSet<ExpectationModel> Expectations { get; set; }
+        public DbSet<ActivityModel> Activities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

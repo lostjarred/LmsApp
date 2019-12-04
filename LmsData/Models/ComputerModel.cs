@@ -5,7 +5,7 @@ using static LmsData.Extensions.Enums;
 
 namespace LmsData.Models
 {
-    public class Computers
+    public class ComputerModel
     {
         public int Id { get; set; }
         public string Brand { get; set; }
