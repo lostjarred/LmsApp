@@ -14,7 +14,7 @@ namespace LmsData.Models
         IEnumerable<MemberModel> GetActiveMembers();
         MemberModel GetMemberById(int id);
         MemberModel GetMemberByName(string name);
-        IEnumerable<MemberModel> GetMembersByGoup(SessionType session);
+        IEnumerable<MemberModel> GetMembersByGroup(SessionType session);
         IEnumerable<MentorModel> GetAllMentors();
         IEnumerable<MentorModel> GetActiveMentors();
         MemberModel Add(MemberModel member);

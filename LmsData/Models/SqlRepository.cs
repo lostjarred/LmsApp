@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LmsData.Extensions;
+using Microsoft.Extensions.Logging;
+using static LmsData.Extensions.Enums;
 
 namespace LmsData.Models
 {
     // TODO: Impliment SQL Repository
     public class SqlRepository : IRepository
     {
+        private readonly ILogger _logger;
         private LmsContext _context;
 
-        public SqlRepository(LmsContext context)
+        public SqlRepository(ILogger logger, LmsContext context)
         {
+            _logger = logger;
             _context = context;
         }
 
@@ -24,17 +28,20 @@ namespace LmsData.Models
 
         public MemberModel Add(MemberModel member)
         {
-            throw new NotImplementedException();
+            _context.Members.Add(member);
+            _context.SaveChanges();
+
+            return member;
         }
 
         public IEnumerable<MemberModel> GetActiveMembers()
         {
-            throw new NotImplementedException();
+            return _context.Members.Where(x => x.IsActive);
         }
 
         public IEnumerable<MentorModel> GetActiveMentors()
         {
-            throw new NotImplementedException();
+            return _context.Mentors.Where(x => x.Status != MentorStatus.Discontinued);
         }
 
         public IEnumerable<ComputerModel> GetAllComputers()
@@ -44,12 +51,12 @@ namespace LmsData.Models
 
         public IEnumerable<MemberModel> GetAllMembers()
         {
-            throw new NotImplementedException();
+            return _context.Members;
         }
 
         public IEnumerable<MentorModel> GetAllMentors()
         {
-            throw new NotImplementedException();
+            return _context.Mentors;
         }
 
         public ComputerModel GetComputerById(int id)
@@ -59,17 +66,27 @@ namespace LmsData.Models
 
         public MemberModel GetMemberById(int id)
         {
-            throw new NotImplementedException();
+            // Load the member details from the database
+            MemberModel output = _context.Members.Where(m => m.Id == id).FirstOrDefault<MemberModel>();
+
+            // Include Expectations
+            _context.Entry(output).Collection(o => o.Expectations).Load();
+
+            // Include Known Isues
+            _context.Entry(output).Collection(o => o.KnownIssues).Load();
+
+            return output;
         }
 
         public MemberModel GetMemberByName(string name)
         {
+            // TODO: Impliment GetMemberByName method
             throw new NotImplementedException();
         }
 
-        public IEnumerable<MemberModel> GetMembersByGoup(Enums.SessionType session)
+        public IEnumerable<MemberModel> GetMembersByGroup(Enums.SessionType session)
         {
-            throw new NotImplementedException();
+            return _context.Members.Where(x => x.BookedSession == session);
         }
     }
 }
